@@ -1,9 +1,21 @@
-function App() {
+import React from 'react';
+import GlobalStyle from './GlobalStyle'; 
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './Pages/Home';
+import ChatRoom from './Pages/ChatRoom';
+
+const App: React.FC = () => {
   return (
-    <div>
-      <h1>20기 프론트엔드 파이팅!!! 디자인과 사이좋게 지내요~~~</h1>
-    </div>
+    <>
+     <GlobalStyle />
+    <Router>
+      <Routes>
+        <Route path='/' element={<Home/>}/>
+        <Route path="/chat/:id" element={<ChatRoom />} /> 
+      </Routes>
+    </Router>
+    </>
   );
-}
+};
 
 export default App;
