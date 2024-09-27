@@ -39,49 +39,46 @@ const ChatRoom: React.FC = () => {
   }, [id]);
 
   useEffect(() => {
+    // scroll을 맨 아래로 이동
     if (chatRef.current) {
-      // 스크롤을 아래로 이동
       chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
-  }, [messages]);
+  }, [messages]); // messages가 변경될 때마다 실행
 
   const handleSendMessage = (message: string) => {
     const updatedMessages = [...messages, `나: ${message}`];
     setMessages(updatedMessages);
     localStorage.setItem(`chatMessages-${id}`, JSON.stringify(updatedMessages));
-  
+
     if (typingTimeout) {
       clearTimeout(typingTimeout);
     }
-  
-    const responseName = id === "1" ? "세오스" : id === "2" ? "진나경" : "상대방";
-    
+
     const timeoutId1 = setTimeout(() => {
-      const receivedMessage1 = `${responseName}: ${message}에 대한 답 1`;
+      const receivedMessage1 = `상대방: ${message}에 대한 답 1`;
       const updatedMessagesWithFirstResponse = [...updatedMessages, receivedMessage1];
       setMessages(updatedMessagesWithFirstResponse);
       localStorage.setItem(`chatMessages-${id}`, JSON.stringify(updatedMessagesWithFirstResponse));
-  
+
       setTimeout(() => {
-        const receivedMessage2 = `${responseName}: ${message}에 대한 답 2`;
+        const receivedMessage2 = `상대방: ${message}에 대한 답 2`;
         const updatedMessagesWithSecondResponse = [...updatedMessagesWithFirstResponse, receivedMessage2];
         setMessages(updatedMessagesWithSecondResponse);
         localStorage.setItem(`chatMessages-${id}`, JSON.stringify(updatedMessagesWithSecondResponse));
       }, 3000);
     }, 2000);
-  
+
     setTypingTimeout(timeoutId1);
-  };  
+  };
 
   return (
     <ChatRoomContainer>
       <TopNavBar id={id} />
         <Chats 
-          ref={chatRef}
           id={id}
+          ref={chatRef}
           messages={messages} 
           getProfileImage={(index: number) => {
-            // 현재 메시지가 상대방 메시지인지 확인
             const isLastMessage = messages[index].startsWith('상대방:') && 
               (index === messages.length - 1 || messages[index + 1]?.startsWith('나:'));
 
@@ -96,6 +93,7 @@ const ChatRoom: React.FC = () => {
 };
 
 export default ChatRoom;
+
 
 
 

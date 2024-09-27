@@ -10,8 +10,8 @@ interface ChatProps {
 
 const Chats = forwardRef<HTMLDivElement, ChatProps>(({ id, messages, getProfileImage }, ref) => {
   return (
-    <Chat ref={ref}>
-      <UserInfo id={id} />
+    <Chat ref={ref}> {/* ref를 전달 */}
+      <UserInfo id={id}/>
       {messages.map((msg, index) => {
         const isMyMessage = msg.startsWith('나:');
         const isFirstMessage = index === 0 || messages[index - 1]?.startsWith('상대방:');
@@ -29,7 +29,7 @@ const Chats = forwardRef<HTMLDivElement, ChatProps>(({ id, messages, getProfileI
             {/* 프로필 이미지를 마지막 메시지에만 표시하도록 조건 처리 */}
             {getProfileImage(isLastOtherMessage ? index : index - 1)} 
             <OtherMessage $isFirstMessage={isFirstMessage}>
-                {msg.replace('상대방: ', '')}
+              {msg.replace('상대방: ', '')}
             </OtherMessage>
           </OtherMessageContainer>
         );
@@ -38,7 +38,7 @@ const Chats = forwardRef<HTMLDivElement, ChatProps>(({ id, messages, getProfileI
   );
 });
 
-export default Chats;
+export default Chats;  
 
 
 
