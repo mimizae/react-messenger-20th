@@ -28,7 +28,7 @@ const Chats = forwardRef<HTMLDivElement, ChatProps>(({ id, messages, getProfileI
           <OtherMessageContainer key={index} $hasProfileImg={isLastOtherMessage}>
             {/* 프로필 이미지를 마지막 메시지에만 표시하도록 조건 처리 */}
             {getProfileImage(isLastOtherMessage ? index : index - 1)} 
-            <OtherMessage $isFirstMessage={isFirstMessage}>\
+            <OtherMessage $isFirstMessage={isFirstMessage}>
                 {msg.replace('상대방: ', '')}
             </OtherMessage>
           </OtherMessageContainer>
