@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const UserInfoContainer = styled.div`
     display: flex;
-    margin: 12px;
+    margin-bottom: 12px;
     flex-direction: column;
     align-items: center;
     justify-content: center;

@@ -17,7 +17,6 @@ const InputBar: React.FC<InputBarProps> = ({ onSendMessage }) => {
     if (messageRef.current) {
       const message = messageRef.current.value.trim();
       if (message) {
-        console.log('Sending message:', message); // 전송 확인을 위한 콘솔 로그
         onSendMessage(message); // 부모 컴포넌트에 메시지를 전달
         messageRef.current.value = ''; // 입력창 초기화
       }
@@ -46,7 +45,10 @@ const InputBar: React.FC<InputBarProps> = ({ onSendMessage }) => {
         src={sendIcon}
         alt="sendButton"
         $isFocused={isFocused}
-        onClick={handleSendMessage}  // 전송 버튼 클릭 시 메시지 전송
+        onMouseDown={(e) => {
+          e.preventDefault(); // 기본 동작 방지, 이벤트 버블링 때문에 전송 버튼을 클릭하면 바로 focus가 꺼져서 사라짐
+          handleSendMessage(); // 전송 메시지 호출
+        }}
       />
     </InputBarContainer>
   );

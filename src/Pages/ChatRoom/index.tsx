@@ -55,18 +55,29 @@ const ChatRoom: React.FC = () => {
     }
 
     const timeoutId1 = setTimeout(() => {
-      const receivedMessage1 = `상대방: ${message}에 대한 답 1`;
+      const receivedMessage1 = `상대방: 아 ㄹㅇ?`;
       const updatedMessagesWithFirstResponse = [...updatedMessages, receivedMessage1];
       setMessages(updatedMessagesWithFirstResponse);
       localStorage.setItem(`chatMessages-${id}`, JSON.stringify(updatedMessagesWithFirstResponse));
-
+    
+      // 두 번째 답장
       setTimeout(() => {
-        const receivedMessage2 = `상대방: ${message}에 대한 답 2`;
+        const receivedMessage2 = `상대방: 헐 ㅋㅋ`;
         const updatedMessagesWithSecondResponse = [...updatedMessagesWithFirstResponse, receivedMessage2];
         setMessages(updatedMessagesWithSecondResponse);
         localStorage.setItem(`chatMessages-${id}`, JSON.stringify(updatedMessagesWithSecondResponse));
-      }, 3000);
-    }, 2000);
+    
+        // 세 번째 답장
+        setTimeout(() => {
+          const receivedMessage3 = `상대방: 대박이다`;
+          const updatedMessagesWithThirdResponse = [...updatedMessagesWithSecondResponse, receivedMessage3];
+          setMessages(updatedMessagesWithThirdResponse);
+          localStorage.setItem(`chatMessages-${id}`, JSON.stringify(updatedMessagesWithThirdResponse));
+        }, 2000); // 세 번째 답장
+    
+      }, 2000); // 두 번째 답장
+    
+    }, 2000); // 첫 번째 답장    
 
     setTypingTimeout(timeoutId1);
   };

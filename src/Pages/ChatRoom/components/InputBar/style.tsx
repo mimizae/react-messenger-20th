@@ -6,7 +6,7 @@ export const InputBarContainer = styled.div`
   flex-direction: row;
   align-items: center;
   position: absolute; // 부모 요소에 상대적으로 위치 고정
-  bottom: 90px; // 부모 요소의 하단에 고정
+  bottom: 80px; // 부모 요소의 하단에 고정
   left: 0; // 왼쪽도 고정
   right: 0; // 오른쪽도 고정
   padding: 16px;

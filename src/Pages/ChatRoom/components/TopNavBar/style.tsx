@@ -4,30 +4,36 @@ export const TopNavBarContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    backdrop-filter: blur(15px); /* 배경 흐리게 처리 */
+    background-color: rgba(255, 255, 255, 0.5); /* 반투명한 흰색 배경 */
+    padding-bottom: 12px;
 `;
 
 export const BackIcon = styled.img`
     width: 24px;
     height: 24px;
     cursor: pointer;
+    margin-right: 12px;
     &:hover {
-        background-color: rgba(0, 0, 0, 0.1); // 호버 시 배경색
-        border-radius: 50%; // 버튼을 원형으로
+        width: 26px;
+        height: 26px;
+        margin-right: 10px;
     }
 `;
 
 export const UserInfoText = styled.div`
     display: flex;
+    background-color: white; /* 불투명한 배경 */
     flex-direction: column;  /* 세로로 배치 */
     margin-left: 8px;  /* 텍스트와 프로필 이미지 사이의 여백 */
 `;
 
 export const ProfileImg = styled.img`
     display: flex;
+    background-color: white; /* 불투명한 배경 */
     width: 36px;
     height: 36px;
     cursor: pointer;
-    margin-left: 12px;
 `;
 
 export const Name = styled.div`
@@ -35,6 +41,7 @@ export const Name = styled.div`
     font-size: 14px;
     font-style: normal;
     font-weight: 600;
+    background-color: white; /* 불투명한 배경 */
 `;
 
 export const ActiveStatus = styled.div`
@@ -58,8 +65,8 @@ export const PhoneIcon = styled.img`
     cursor: pointer;
 
     &:hover {
-        background-color: rgba(0, 0, 0, 0.1); // 호버 시 배경색
-        border-radius: 50%; // 버튼을 원형으로
+        width: 26px;
+        height: 26px;
     }
     margin-left: auto; /* 오른쪽 끝으로 이동 */
 `;
