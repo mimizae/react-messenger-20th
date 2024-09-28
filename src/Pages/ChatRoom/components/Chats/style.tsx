@@ -44,7 +44,6 @@ export const OtherMessage = styled.div<{ $isFirstMessage: boolean, $isMiddleMess
   padding: 6px 12px;
   max-width: 280px;
   word-wrap: break-word;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   
   /* border-radius 계산 순서 조정 */
   border-radius: ${({ $isFirstMessage, $isMiddleMessage, $isGroupEnd }) => {
