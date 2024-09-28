@@ -15,6 +15,7 @@ export const Address = styled.p`
 export const Time = styled.p`
     margin-top: 24px;
     margin-bottom: 32px;
+    font-size: 12px;
     color: var(--gray-scale-400, #9EA4AA);
 `;
 
