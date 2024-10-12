@@ -58,5 +58,31 @@ export const MessageTime = styled.div`
   font-size: 0.8rem;
   color: gray;
   text-align: center;
-  margin: 8px 0; /* 메시지 간 간격 */
+  margin: 32px 0 20px 0; /* 메시지 간 간격 */
 `;
+export const EmojiPicker = styled.div`
+  display: flex;
+  width: 240px;
+  height: 36px;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 6px;
+  background-color: var(--gray-scale-50, #F7F8F9); /* 배경색 */
+  border-radius: 16px; /* 모서리 둥글게 */
+  padding: 6px 12px; /* 안쪽 여백 */
+  
+  span {
+    width: 24px;
+    height: 24px;
+    cursor: pointer; /* 마우스 포인터 모양 변경 */
+    margin: 0 5px; /* 이모지 사이의 간격 */
+    font-size: 20px; /* 이모지 크기 */
+    
+    &:hover {
+      transform: scale(1.2); /* 호버 시 이모지 확대 */
+      transition: transform 0.2s; /* 확대 애니메이션 */
+    }
+  }
+`;
+
