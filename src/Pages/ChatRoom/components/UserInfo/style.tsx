@@ -11,12 +11,6 @@ export const UserInfoContainer = styled.div`
 
 export const Address = styled.p`
     color: var(--gray-scale-400, #9EA4AA);
-`
-export const Time = styled.p`
-    margin-top: 24px;
-    margin-bottom: 32px;
-    font-size: 12px;
-    color: var(--gray-scale-400, #9EA4AA);
 `;
 
 export const BigProfileImg = styled.img`

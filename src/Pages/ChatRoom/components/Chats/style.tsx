@@ -53,4 +53,10 @@ export const OtherMessage = styled.div<{ $isFirstMessage: boolean, $isMiddleMess
     return '16px';  // 기본 값
   }};
 `;
-
+export const MessageTime = styled.div`
+  align-self: center;
+  font-size: 0.8rem;
+  color: gray;
+  text-align: center;
+  margin: 8px 0; /* 메시지 간 간격 */
+`;
