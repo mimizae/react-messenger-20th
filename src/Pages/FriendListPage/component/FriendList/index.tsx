@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ListContainer, Count, FriendItem, FriendName, ProfileImg } from "./style";
-import phone from '../../../../assets/blue-phone.svg';
+import phone from '../../../../assets/FriendListPage/blue-phone.svg';
 import { PhoneIcon } from "../../../ChatRoom/components/TopNavBar/style";
 
 interface User {

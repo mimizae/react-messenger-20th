@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
-import camera from '../../../../assets/Camera.svg';
-import gallery from '../../../../assets/Gallery.svg';
-import Good from '../../../../assets/Good.svg';
-import sendIcon from '../../../../assets/SendIcon.svg'; // 전송 버튼 아이콘
+import camera from '../../../../assets/ChatRoom/Camera.svg';
+import gallery from '../../../../assets/ChatRoom/Gallery.svg';
+import Good from '../../../../assets/ChatRoom/Good.svg';
+import sendIcon from '../../../../assets/ChatRoom/SendIcon.svg'; // 전송 버튼 아이콘
 import { InputBarContainer, Camera, Gallery, InputField, GoodButton, SendButton} from './style';
 
 interface InputBarProps {

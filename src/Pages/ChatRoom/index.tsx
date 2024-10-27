@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 import TopNavBar from './components/TopNavBar';
 import Chats from './components/Chats';
 import InputBar from './components/InputBar';
-import Profile1 from '../../assets/profile.svg';
-import Profile2 from '../../assets/cat.svg';
+import Profile1 from '../../assets/ChatRoom/profile.svg';
+import Profile2 from '../../assets/ChatRoom/cat.svg';
 import { ChatRoomContainer, ProfileImgSmall } from './styles';
 
 const loadMessagesFromMockData = async (chatId: string) => {

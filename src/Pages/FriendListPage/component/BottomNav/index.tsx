@@ -1,8 +1,8 @@
 import React from "react";
 import { NavContainer, NavItem, Icon, Menu } from "./style";
 import { Link } from "react-router-dom";
-import Friend_Icon from '../../../../assets/Friend-icon.svg'
-import ChatIcon from '../../../../assets/Chat-icon.svg';
+import Friend_Icon from '../../../../assets/FriendListPage/Friend-icon.svg'
+import ChatIcon from '../../../../assets/FriendListPage/Chat-icon.svg';
 
 const BottomNav: React.FC = () => {
   return (

@@ -1,6 +1,6 @@
 import React from 'react';
-import bigProfileImg1 from '../../../../assets/BigProfileImg.svg';
-import bigProfileImg2 from '../../../../assets/BigProfileImg2.svg';
+import bigProfileImg1 from '../../../../assets/ChatRoom/BigProfileImg.svg';
+import bigProfileImg2 from '../../../../assets/ChatRoom/BigProfileImg2.svg';
 import { UserInfoContainer, BigProfileImg, Address } from './style';
 
 const UserInfo: React.FC<{ id: number }> = ({ id }) => {

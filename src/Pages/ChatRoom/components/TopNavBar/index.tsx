@@ -1,9 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Profile1 from '../../../../assets/profile.svg';
-import Profile2 from '../../../../assets/cat.svg';
-import phone from '../../../../assets/phone.svg';
-import Back from '../../../../assets/BackButton.svg';
+import Profile1 from '../../../../assets/ChatRoom/profile.svg';
+import Profile2 from '../../../../assets/ChatRoom/cat.svg';
+import phone from '../../../../assets/ChatRoom/phone.svg';
+import Back from '../../../../assets/ChatRoom/BackButton.svg';
 import { TopNavBarContainer, BackIcon, PhoneIcon, ProfileImg, UserInfoText, Name, ActiveStatus } from './style';
 
 const TopNavBar: React.FC<{ id?: string }> = ({ id }) => {

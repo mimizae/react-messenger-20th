@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import FriendList from './component/FriendList';
 import { FriendListPageContainer, Header, Title, ProfileImg, FriendSearch } from './style';
-import profileImg from '../../assets/cat.svg';
+import profileImg from '../../assets/ChatRoom/cat.svg';
 import BottomNav from './component/BottomNav';
 
 const FriendListPage: React.FC = () => {
