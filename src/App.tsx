@@ -1,7 +1,7 @@
 import React from 'react';
 import GlobalStyle from './GlobalStyle'; 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './Pages/Home';
+import FriendListPage from './Pages/FriendListPage';
 import ChatRoom from './Pages/ChatRoom';
 
 const App: React.FC = () => {
@@ -10,7 +10,8 @@ const App: React.FC = () => {
      <GlobalStyle />
     <Router>
       <Routes>
-        <Route path='/' element={<Home/>}/>
+        <Route path='/' element={<FriendListPage/>}/>
+        {/*<Route path="/chat" element={<ChatListPage />} />*/}
         <Route path="/chat/:id" element={<ChatRoom />} /> 
       </Routes>
     </Router>

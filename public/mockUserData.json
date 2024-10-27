@@ -1,0 +1,24 @@
+[
+    {
+      "id": 1,
+      "name": "세오스",
+      "profileImage": "/Ceos.svg"
+    },
+    {
+      "id": 2,
+      "name": "승헌스",
+      "profileImage": "/seunghunse.svg"
+    },
+    {
+      "id": 3,
+      "name": "스윙스",
+      "profileImage": "/sws.svg"
+      
+    },
+    {
+      "id": 4,
+      "name": "시몬스",
+      "profileImage": "/simonse.svg"
+    }
+  ]
+  

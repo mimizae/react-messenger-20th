@@ -62,7 +62,7 @@ export const MessageTime = styled.div`
 `;
 export const EmojiPicker = styled.div`
   display: flex;
-  width: 240px;
+  width: 340px;
   height: 36px;
   gap: 12px;
   justify-content: center;
@@ -71,8 +71,9 @@ export const EmojiPicker = styled.div`
   background-color: var(--gray-scale-50, #F7F8F9); /* 배경색 */
   border-radius: 16px; /* 모서리 둥글게 */
   padding: 6px 12px; /* 안쪽 여백 */
-  
-  span {
+`;
+
+export const Emoji = styled.span`
     width: 24px;
     height: 24px;
     cursor: pointer; /* 마우스 포인터 모양 변경 */
@@ -83,6 +84,4 @@ export const EmojiPicker = styled.div`
       transform: scale(1.2); /* 호버 시 이모지 확대 */
       transition: transform 0.2s; /* 확대 애니메이션 */
     }
-  }
 `;
-
