@@ -1,37 +1,9 @@
 import styled from 'styled-components';
 
-export const FriendListPageContainer = styled.div`
+export const ListPageContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 16px;
   position: relative;
   min-height: 100%;
-`;
-
-export const Header = styled.header`
-display: flex;
-gap: 12px;
-align-items: center;
-margin: 35px 0 12px 0;
-`;
-
-export const Title = styled.p`
-display: flex;
-font-size: 20px;
-font-style: normal;
-font-weight: 600;
-`;
-export const ProfileImg = styled.img`
-display: flex;
-`;
-export const FriendSearch = styled.input`
-display: flex;
-width: 343px;
-height: 34px;
-border: none;
-outline:none;
-padding-left: 12px;
-border-radius: 8px;
-caret-color: #1675FF;
-background-color: #F7F8F9;
 `;

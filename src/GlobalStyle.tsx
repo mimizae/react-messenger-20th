@@ -15,6 +15,7 @@ const GlobalStyle = createGlobalStyle`
         margin: 0;
         height: 100vh;
         background-color: #f0f0f0; /* 배경색 설정 */
+        overflow: hidden;
     }
 
     #root {

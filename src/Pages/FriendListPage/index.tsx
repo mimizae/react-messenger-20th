@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import FriendList from './component/FriendList';
-import { FriendListPageContainer, Header, Title, ProfileImg, FriendSearch } from './style';
-import profileImg from '../../assets/ChatRoom/cat.svg';
-import BottomNav from './component/BottomNav';
+import { ListPageContainer } from './style';
+import BottomNav from '../../components/BottomNav';
+import Header from '../../components/Header';
 
 const FriendListPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -12,19 +12,11 @@ const FriendListPage: React.FC = () => {
   };
 
   return (
-    <FriendListPageContainer>
-      <Header>
-        <ProfileImg src={profileImg} />
-        <Title>친구</Title>
-      </Header>
-      <FriendSearch
-        type="text"
-        value={searchTerm}
-        onChange={handleSearchChange}
-      />
+    <ListPageContainer>
+      <Header searchTerm={searchTerm} onSearchChange={handleSearchChange} title='친구' />
       <FriendList searchTerm={searchTerm} />
-      <BottomNav/>
-    </FriendListPageContainer>
+      <BottomNav />
+    </ListPageContainer>
   );
 };
 

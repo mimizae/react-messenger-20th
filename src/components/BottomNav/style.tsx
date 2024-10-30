@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+interface NavItemProps {
+  active: boolean;
+}
+
 export const NavContainer = styled.div`
   display: flex;
   width: 100%;
@@ -11,13 +15,15 @@ export const NavContainer = styled.div`
   bottom: 0; /* 부모 요소의 가장 아래에 위치 */
   left: 0;
   background-color: #F7F8F9; /* 배경 색상 */
+  border-radius: 0 0 20px 20px; 
 `;
 
 
-export const NavItem = styled.div`
+export const NavItem = styled.div<NavItemProps>`
 display: flex;
 flex-direction: column;
 align-items: center;
+gap: 5px;
 cursor: pointer; /* 커서 모양 */
 text-decoration: none;
 `;
