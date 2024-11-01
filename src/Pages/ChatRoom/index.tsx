@@ -47,7 +47,7 @@ const ChatRoom: React.FC = () => {
     const opponentUser = userData.find((user) => user.id === opponentUserId);
     setOpponentProfileImage(opponentUser ? opponentUser.profileImage : null);
   }, [opponentUserId, userData]);
-  
+
   useEffect(() => {
     // 새 메시지가 추가되면 스크롤을 맨 아래로 이동
     if (chatRef.current) {
@@ -59,6 +59,7 @@ const ChatRoom: React.FC = () => {
     const newMessage = { userId: currentUserId, content: message, time: new Date().toISOString() };
     const updatedMessages = [...messages, newMessage];
     setMessages(updatedMessages);
+
 
     // 로컬 스토리지에 저장
     localStorage.setItem(`chatMessages-${chatId}`, JSON.stringify(updatedMessages));
