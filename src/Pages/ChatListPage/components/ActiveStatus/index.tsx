@@ -1,5 +1,5 @@
 import React from "react";
-import { ActiveStatusLayout, StatusWrapper, Photo, Name } from "./style";
+import { ActiveStatusLayout, StatusWrapper, Photo, Name, StatusContainer, StatusDot   } from "./style";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from 'recoil';
 import { userDataState } from '../../../../recoil/atom';
@@ -14,13 +14,18 @@ const ActiveStatus: React.FC = () => {
 
   return (
     <ActiveStatusLayout>
-      {users.map((user) => (
+    {users
+      .filter(user => user.id !== 5) // id가 5인 사용자, 진나경 제외
+      .map((user) => (
         <StatusWrapper key={user.id} onClick={() => handleUserClick(user.id)}>
-          <Photo src={user.profileImage} alt={`${user.name} profile`} />
+          <StatusContainer>
+            <Photo src={user.profileImage} alt={`${user.name} profile`} />
+            <StatusDot /> 
+          </StatusContainer>
           <Name>{user.name}</Name>
         </StatusWrapper>
       ))}
-    </ActiveStatusLayout>
+  </ActiveStatusLayout>
   );
 };
 

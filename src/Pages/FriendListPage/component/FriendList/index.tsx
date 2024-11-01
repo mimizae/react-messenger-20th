@@ -20,9 +20,9 @@ const FriendList: React.FC<FriendListProps> = ({ searchTerm }) => {
   const userData = useRecoilValue(userDataState); // atom에서 사용자 데이터 가져오기
   const navigate = useNavigate();
 
-  // 검색어에 따라 친구 목록 필터링
+  // 검색어에 따라 친구 목록 필터링 (userId가 5인 사용자, 진나경을 제외함)
   const filteredUsers = userData.filter((user: User) =>
-    user.name.toLowerCase().includes(searchTerm.toLowerCase())
+    user.id !== 5 && user.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handleFriendClick = (id: number) => {

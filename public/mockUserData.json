@@ -20,5 +20,10 @@
       "name": "시몬스",
       "profileImage": "/Profile/simonse.svg"
     }
+    ,{
+      "id": 5,
+      "name": "진나경",
+      "profileImage": "/Profile/cat.svg"
+    }
   ]
   

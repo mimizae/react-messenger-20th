@@ -1,27 +1,26 @@
 import React from 'react';
+import { useRecoilState } from 'recoil';
 import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import phone from '../../../../assets/ChatRoom/phone.svg';
 import Back from '../../../../assets/ChatRoom/BackButton.svg';
-import { userDataState } from '../../../../recoil/atom';
+import { userDataState, currentUserIdState, opponentUserIdState } from '../../../../recoil/atom';
 import { TopNavBarContainer, BackIcon, PhoneIcon, ProfileImg, UserInfoText, Name, ActiveStatus } from './style';
 
-const TopNavBar: React.FC<{ id: number }> = ({ id }) => {
+const TopNavBar: React.FC<{ opponentUserId: number, currentUserId: number  }> = ({ opponentUserId, currentUserId }) => {
     const navigate = useNavigate();
     const userData = useRecoilValue(userDataState); // atom에서 사용자 데이터 가져오기
+    const [, setCurrentUserId] = useRecoilState(currentUserIdState);
+    const [opponentId, setOpponentUserId] = useRecoilState(opponentUserIdState);
 
     // 해당 ID에 맞는 사용자 정보 찾기
-    const userInfo = userData.find((user) => user.id === Number(id)) || null;
+    const userInfo = userData.find((user) => user.id === Number(opponentId)) || null;
 
     const handleProfileClick = () => {
-      // 프로필 사진에 따라 다른 채팅방으로 이동
-      if (id === 1) {
-        navigate('/chat/3'); // 채팅방 2로 이동
-      } else {
-        navigate('/chat/1'); // 채팅방 1로 이동
-      }
+      setCurrentUserId(opponentUserId);  // 현재 사용자를 상대방 ID로 설정
+      setOpponentUserId(currentUserId);  // 상대방을 현재 사용자 ID로 설정
     };
-
+    
     return (
       <TopNavBarContainer>
         <BackIcon src={Back} alt="Back Button" onClick={() => navigate(-1)} />

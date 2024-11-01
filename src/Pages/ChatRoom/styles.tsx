@@ -11,8 +11,6 @@ export const ChatRoomContainer = styled.div`
 export const ProfileImgSmall = styled.img`
   width: 24px;
   height: 24px;
-  margin-right: 8px;  // 프로필 이미지와 메시지 간격
-  border-radius: 50%; // 동그란 이미지
-  transition: transform 0.3s ease; // 부드러운 이동을 위한 transition
+  margin: 5px 5px 5px 0;  
 `;
   

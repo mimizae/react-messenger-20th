@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import { userDataState, chatDataState } from '../../recoil/atom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { userDataState, chatDataState, currentUserIdState, opponentUserIdState } from '../../recoil/atom';
 import TopNavBar from './components/TopNavBar';
 import Chats from './components/Chats';
 import InputBar from './components/InputBar';
@@ -14,8 +14,8 @@ const ChatRoom: React.FC = () => {
   const chatData = useRecoilValue(chatDataState); // atom에서 채팅 데이터 가져오기
 
   const [messages, setMessages] = useState<{ userId: number; content: string; time: string }[]>([]);
-  const [currentUserId, setCurrentUserId] = useState<number>(0);
-  const [opponentUserId, setOpponentUserId] = useState<number>(0);
+  const [currentUserId, setCurrentUserId] = useRecoilState(currentUserIdState);
+  const [opponentUserId, setOpponentUserId] = useRecoilState(opponentUserIdState);
   const [opponentProfileImage, setOpponentProfileImage] = useState<string | null>(null);
   const chatRef = React.useRef<HTMLDivElement>(null);
   const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(null);
@@ -29,10 +29,6 @@ const ChatRoom: React.FC = () => {
         setCurrentUserId(chatDataForId.users[0].id); // 첫 번째 사용자를 현재 사용자로 설정
         setOpponentUserId(chatDataForId.users[1].id); // 두 번째 사용자를 상대방으로 설정
         setMessages(chatDataForId.messages); // 대화 메시지 설정
-        
-        // userData에서 상대방 프로필 이미지 찾기
-        const opponentUser = userData.find((user) => user.id === chatDataForId.users[1].id);
-        setOpponentProfileImage(opponentUser ? opponentUser.profileImage : null);
       }
 
       // 로컬 스토리지에서 메시지 로드
@@ -45,8 +41,13 @@ const ChatRoom: React.FC = () => {
     if (chatId) {
       initializeChat();
     }
-  }, [chatId, chatData, userData]); // 의존성 배열에 chatData와 userData 추가
+  }, [chatId, chatData, userData, setCurrentUserId, setOpponentUserId]); // 의존성 배열에 chatData와 userData 추가
 
+  useEffect(() => {
+    const opponentUser = userData.find((user) => user.id === opponentUserId);
+    setOpponentProfileImage(opponentUser ? opponentUser.profileImage : null);
+  }, [opponentUserId, userData]);
+  
   useEffect(() => {
     // 새 메시지가 추가되면 스크롤을 맨 아래로 이동
     if (chatRef.current) {
@@ -87,7 +88,7 @@ const ChatRoom: React.FC = () => {
   return (
     <ChatRoomContainer>
       <StatusBar/>
-      <TopNavBar id={opponentUserId} />
+      <TopNavBar opponentUserId={opponentUserId} currentUserId={currentUserId} />
       <Chats 
         currentUserId={currentUserId}
         opponentUserId={opponentUserId}
