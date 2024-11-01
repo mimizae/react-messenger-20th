@@ -11,9 +11,9 @@ export const Overlay = styled.div`
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.1); // 반투명 배경
-  backdrop-filter: blur(5px); // 블러 효과
+  backdrop-filter: blur(2px); // 블러 효과
   z-index: 500; // 사이드바보다 아래에 표시되도록
-  border-radius: 20px;
+  border-radius: 40px;
 `;
 
 export const SidebarContainer = styled.div<SidebarContainerProps>`
@@ -26,7 +26,7 @@ export const SidebarContainer = styled.div<SidebarContainerProps>`
   height: 100%; // 부모 요소의 높이에 맞추기
   background-color: white; // 배경 색상
   z-index: 1000; // 다른 요소 위에 표시
-  border-radius: 20px 0 0 20px;
+  border-radius: 40px 0 0 40px;
   color: black;
   padding: 0 16px;
   transition: transform 0.5s ease;

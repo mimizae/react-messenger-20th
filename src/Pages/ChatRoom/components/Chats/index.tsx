@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useState } from 'react';
 import UserInfo from '../UserInfo';
-import { Chat, MyMessage, OtherMessage, OtherMessageContainer, MessageTime, EmojiPicker, Emoji } from './style';
+import { Chat, MyMessage, OtherMessage, OtherMessageContainer, MessageTime, EmojiPicker, Emoji, MymessageEmoji, OtherMessageEmoji } from './style';
 
 interface ChatProps {
   currentUserId: number; // 현재 사용자 ID
@@ -145,10 +145,11 @@ return (
                 $isFirstMessage={isFirstMessage}
                 $isGroupEnd={isGroupEnd}
                 $isMiddleMessage={isMiddleMessage}
+                $hasEmoji={!!emoji} // 이모지가 있는지 확인하여 전달
                 onDoubleClick={(event) => handleMessageDoubleClick(index, event)} // 더블 클릭 시 이모지 제거
               >
                 {updateMessageWithEmoji(index, msg.content)}
-                {emoji && <Emoji style={{ position: 'absolute', bottom: '1px', right: 0 }}>{emoji}</Emoji>} {/* 메시지 위에 이모지 표시 */}
+                {emoji && <MymessageEmoji >{emoji}</MymessageEmoji>} {/* 메시지 위에 이모지 표시 */}
               </MyMessage>
             ) : ( // 다른 사용자의 메시지일 경우
               <OtherMessageContainer
@@ -160,10 +161,11 @@ return (
                   $isFirstMessage={isFirstMessage}
                   $isMiddleMessage={isMiddleMessage}
                   $isGroupEnd={isGroupEnd}
+                  $hasEmoji={!!emoji} // 이모지가 있는지 확인하여 전달
                   onDoubleClick={(event) => handleMessageDoubleClick(index, event)} // 더블 클릭 시 이모지 제거
                 >
                   {updateMessageWithEmoji(index, msg.content)}
-                  {emoji && <Emoji style={{ position: 'absolute', bottom: '1px', left: '35px' }}>{emoji}</Emoji>} {/* 메시지 위에 이모지 표시 */}
+                  {emoji && <OtherMessageEmoji >{emoji}</OtherMessageEmoji>} {/* 메시지 위에 이모지 표시 */}
                 </OtherMessage>
               </OtherMessageContainer>
             )}

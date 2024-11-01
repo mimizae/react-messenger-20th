@@ -11,6 +11,6 @@ export const ChatRoomContainer = styled.div`
 export const ProfileImgSmall = styled.img`
   width: 24px;
   height: 24px;
-  margin: 5px 5px 5px 0;  
+  margin: 5px 8px 0 0;  
 `;
   
