@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 interface SidebarContainerProps {
-    isOpen: boolean; // 사이드바의 열림 상태를 나타내는 prop
+    $isOpen: boolean; // 사이드바의 열림 상태를 나타내는 prop
 }
 
 export const Overlay = styled.div`
@@ -30,7 +30,7 @@ border-radius: 20px 0 0 20px;
 color: black;
 padding: 0 16px;
 transition: transform 0.5s ease;
-transform: ${({ isOpen }) => (isOpen ? 'translateX(0)' : 'translateX(-100%)')};
+transform: ${({ $isOpen }) => ($isOpen ? 'translateX(0)' : 'translateX(-100%)')};
 `;
 
 export const MyProfile = styled.div`

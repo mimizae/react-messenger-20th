@@ -2,34 +2,39 @@ import styled from "styled-components";
 
 export const ChatListLayout = styled.div`
 display: flex;
+flex-direction: column;
 `;
 
 export const ChatItem = styled.div`
   display: flex;
   align-items: center;
-  padding: 10px 15px;
-  border-radius: 8px;
-  background-color: #ffffff; /* 채팅 아이템 배경색 */
-  margin-bottom: 10px;
+  padding: 12px 0;
+  gap: 12px;
   cursor: pointer;
-  transition: background-color 0.2s;
-
   &:hover {
     background-color: #e9eff2; /* 호버 시 배경색 변경 */
   }
 `;
 
-export const UserPhoto = styled.div`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #ccc; /* 기본 프로필 사진 색상 */
+export const UserPhoto = styled.img`
+  width: 56px;
+  height: 56px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 10px;
   font-weight: bold;
   color: white;
+`;
+
+export const ChatInfo = styled.div`
+display: flex
+flex-direction: column;
+`;
+
+export const MesseageInfo = styled.div`
+display: flex;
+justify-content: center;
+gap: 7px;
 `;
 
 export const ChatName = styled.p`
@@ -51,7 +56,6 @@ export const LastMessage = styled.p`
 `;
 
 export const Timestamp = styled.span`
-  font-size: 12px;
+  font-size: 14px;
   color: #b0b3b8; /* 타임스탬프 색상 */
-  margin-left: 10px;
 `;

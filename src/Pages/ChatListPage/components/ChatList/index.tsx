@@ -1,68 +1,117 @@
-import React, { useEffect, useState } from "react";
-import { ChatListLayout, ChatItem, LastMessage, Timestamp, ChatName } from "./style";
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import { ChatListLayout, ChatItem, LastMessage, Timestamp, ChatName, UserPhoto, ChatInfo, MesseageInfo } from './style';
+import { NoResult } from '../../../FriendListPage/component/FriendList/style';
 
-interface User {
+// 타임스탬프 포맷팅 함수
+const formatTimestamp = (timestamp: string) => {
+  const date = new Date(timestamp);
+  return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+};
+
+// User, Message, ChatMessage, ChatMessages 타입 정의
+type User = {
   id: number;
   name: string;
-}
+  profileImage: string;
+};
 
-interface Message {
+type Message = {
   userId: number;
   content: string;
-  time: string;
-}
+  time: string; // ISO 8601 형식의 문자열일 것으로 가정
+};
 
-interface ChatRoom {
+type ChatMessage = {
   users: User[];
   messages: Message[];
+};
+
+type ChatMessages = Record<string, ChatMessage>;
+
+interface ChatListProps {
+  searchTerm: string; // 추가된 props
 }
 
-interface ChatData {
-  [key: string]: ChatRoom;
-}
-
-const ChatList: React.FC = () => {
-  const [chatData, setChatData] = useState<ChatData>({});
+const ChatList: React.FC<ChatListProps> = ({ searchTerm }) => {
+  const [users, setUsers] = useState<User[]>([]); // 사용자 데이터를 저장하는 상태
+  const [chatRooms, setChatRooms] = useState<ChatMessages>({}); // 채팅 데이터를 저장하는 상태
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchChatData = async () => {
-      try {
-        const storedChatData = localStorage.getItem("chatMessages");
-        if (storedChatData) {
-          const data = JSON.parse(storedChatData);
-          setChatData(data);
-        }
-      } catch (error) {
-        console.error("Error loading chat data from localStorage:", error);
-      }
+    // 사용자 데이터와 채팅 데이터를 불러옵니다.
+    const loadUserData = async () => {
+      const response = await fetch('/mockUserData.json');
+      const userData = await response.json();
+      setUsers(userData); // 사용자 상태 업데이트
     };
 
-    fetchChatData();
+    const loadChatData = async () => {
+      const response = await fetch('/mockChatData.json');
+      const chatData = await response.json();
+
+      // 로컬스토리지에서 업데이트된 메시지가 있는지 확인하고, chatData와 병합합니다.
+      Object.keys(chatData.chatMessages).forEach((chatId) => {
+        const storedMessages = localStorage.getItem(`chatMessages-${chatId}`);
+        if (storedMessages) {
+          chatData.chatMessages[chatId].messages = JSON.parse(storedMessages);
+        }
+      });
+
+      setChatRooms(chatData.chatMessages); // 채팅방 상태 업데이트
+    };
+
+    loadUserData();
+    loadChatData();
   }, []);
 
-  const handleChatClick = (chatId: string) => {
-    navigate(`/chat/${chatId}`);
-  };
+  // 검색어에 따라 채팅 목록 필터링
+  const filteredChatRooms = Object.keys(chatRooms).filter((chatId) => {
+    const chat = chatRooms[chatId];
+    return chat.users.some((user) => user.name.toLowerCase().includes(searchTerm.toLowerCase()));
+  });
+
+  // 각 채팅방의 마지막 메시지를 기준으로 정렬
+  const sortedChatRooms = filteredChatRooms.sort((a, b) => {
+    const lastMessageA = chatRooms[a].messages[chatRooms[a].messages.length - 1];
+    const lastMessageB = chatRooms[b].messages[chatRooms[b].messages.length - 1];
+
+    // 메시지가 없을 경우 처리
+    const timeA = lastMessageA ? new Date(lastMessageA.time).getTime() : 0;
+    const timeB = lastMessageB ? new Date(lastMessageB.time).getTime() : 0;
+
+    return timeB - timeA; // 내림차순으로 정렬
+  });
 
   return (
     <ChatListLayout>
-      {Object.entries(chatData).map(([chatId, chatRoom]) => {
-        const lastMessage = chatRoom.messages[chatRoom.messages.length - 1];
-        const participants = chatRoom.users.map(user => user.name).join(", ");
-
-        return (
-          <ChatItem key={chatId} onClick={() => handleChatClick(chatId)}>
-            <ChatName>{participants}</ChatName>
-            <LastMessage>{lastMessage.content}</LastMessage>
-            <Timestamp>{new Date(lastMessage.time).toLocaleTimeString()}</Timestamp>
-          </ChatItem>
-        );
-      })}
+      {filteredChatRooms.length > 0 ? (
+        sortedChatRooms.map((chatId) => {
+          const chat = chatRooms[chatId];
+  
+          // 마지막 메시지 가져오기
+          const lastMessage = chat.messages[chat.messages.length - 1]; // 마지막 메시지
+          const opponentId = chat.users.find((user) => user.id !== chat.users[0].id)?.id; // 상대방 ID
+          const opponentData = users.find((user) => user.id === opponentId); // 상대방 정보 찾기
+  
+          return (
+            <ChatItem key={chatId} onClick={() => navigate(`/chat/${opponentId}`)}>
+              <UserPhoto src={opponentData?.profileImage} alt={opponentData?.name || 'User'} />
+              <ChatInfo>
+                <ChatName>{opponentData?.name}</ChatName>
+                <MesseageInfo>
+                  <LastMessage>{lastMessage.content}</LastMessage>
+                  <Timestamp>· {formatTimestamp(lastMessage.time)}</Timestamp>
+                </MesseageInfo>
+              </ChatInfo>
+            </ChatItem>
+          );
+        })
+      ) : (
+        <NoResult>검색 결과가 없습니다. 🥹</NoResult>
+      )}
     </ChatListLayout>
-  );
+  );  
 };
 
 export default ChatList;
-

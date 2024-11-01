@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import FriendList from './component/FriendList';
-import { ListPageContainer } from './style';
+import { PageContainer } from './style';
 import BottomNav from '../../components/BottomNav';
 import Header from '../../components/Header';
 
@@ -12,11 +12,11 @@ const FriendListPage: React.FC = () => {
   };
 
   return (
-    <ListPageContainer>
+    <PageContainer>
       <Header searchTerm={searchTerm} onSearchChange={handleSearchChange} title='친구' />
       <FriendList searchTerm={searchTerm} />
       <BottomNav />
-    </ListPageContainer>
+    </PageContainer>
   );
 };
 
