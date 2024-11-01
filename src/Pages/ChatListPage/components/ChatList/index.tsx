@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { userDataState, chatDataState  } from '../../../../recoil/atom';
 import { ChatListLayout, ChatItem, LastMessage, Timestamp, ChatName, UserPhoto, ChatInfo, MesseageInfo } from './style';
 import { NoResult } from '../../../FriendListPage/component/FriendList/style';
 
@@ -9,61 +11,14 @@ const formatTimestamp = (timestamp: string) => {
   return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 };
 
-// User, Message, ChatMessage, ChatMessages 타입 정의
-type User = {
-  id: number;
-  name: string;
-  profileImage: string;
-};
-
-type Message = {
-  userId: number;
-  content: string;
-  time: string; // ISO 8601 형식의 문자열일 것으로 가정
-};
-
-type ChatMessage = {
-  users: User[];
-  messages: Message[];
-};
-
-type ChatMessages = Record<string, ChatMessage>;
-
 interface ChatListProps {
   searchTerm: string; // 추가된 props
 }
 
 const ChatList: React.FC<ChatListProps> = ({ searchTerm }) => {
-  const [users, setUsers] = useState<User[]>([]); // 사용자 데이터를 저장하는 상태
-  const [chatRooms, setChatRooms] = useState<ChatMessages>({}); // 채팅 데이터를 저장하는 상태
+  const users = useRecoilValue(userDataState); // atom에서 사용자 데이터 가져오기
+  const chatRooms = useRecoilValue(chatDataState); // atom에서 채팅 데이터 가져오기
   const navigate = useNavigate();
-
-  useEffect(() => {
-    // 사용자 데이터와 채팅 데이터를 불러옵니다.
-    const loadUserData = async () => {
-      const response = await fetch('/mockUserData.json');
-      const userData = await response.json();
-      setUsers(userData); // 사용자 상태 업데이트
-    };
-
-    const loadChatData = async () => {
-      const response = await fetch('/mockChatData.json');
-      const chatData = await response.json();
-
-      // 로컬스토리지에서 업데이트된 메시지가 있는지 확인하고, chatData와 병합합니다.
-      Object.keys(chatData.chatMessages).forEach((chatId) => {
-        const storedMessages = localStorage.getItem(`chatMessages-${chatId}`);
-        if (storedMessages) {
-          chatData.chatMessages[chatId].messages = JSON.parse(storedMessages);
-        }
-      });
-
-      setChatRooms(chatData.chatMessages); // 채팅방 상태 업데이트
-    };
-
-    loadUserData();
-    loadChatData();
-  }, []);
 
   // 검색어에 따라 채팅 목록 필터링
   const filteredChatRooms = Object.keys(chatRooms).filter((chatId) => {
@@ -88,12 +43,12 @@ const ChatList: React.FC<ChatListProps> = ({ searchTerm }) => {
       {filteredChatRooms.length > 0 ? (
         sortedChatRooms.map((chatId) => {
           const chat = chatRooms[chatId];
-  
+
           // 마지막 메시지 가져오기
           const lastMessage = chat.messages[chat.messages.length - 1]; // 마지막 메시지
           const opponentId = chat.users.find((user) => user.id !== chat.users[0].id)?.id; // 상대방 ID
           const opponentData = users.find((user) => user.id === opponentId); // 상대방 정보 찾기
-  
+
           return (
             <ChatItem key={chatId} onClick={() => navigate(`/chat/${opponentId}`)}>
               <UserPhoto src={opponentData?.profileImage} alt={opponentData?.name || 'User'} />

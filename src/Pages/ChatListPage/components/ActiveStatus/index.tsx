@@ -1,33 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { ActiveStatusLayout, StatusWrapper, Photo, Name } from "./style";
 import { useNavigate } from "react-router-dom";
-
-interface User {
-  id: number;
-  name: string;
-  profileImage: string;
-}
+import { useRecoilValue } from 'recoil';
+import { userDataState } from '../../../../recoil/atom';
 
 const ActiveStatus: React.FC = () => {
-  const [users, setUsers] = useState<User[]>([]);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch("/mockUserData.json");
-        if (!response.ok) {
-          throw new Error("Failed to fetch user data");
-        }
-        const data: User[] = await response.json();
-        setUsers(data);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-
-    fetchUserData();
-  }, []);
+  const users = useRecoilValue(userDataState);
 
   const handleUserClick = (userId: number) => {
     navigate(`/chat/${userId}`);

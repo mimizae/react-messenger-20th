@@ -1,47 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { userDataState, chatDataState } from '../../recoil/atom';
 import TopNavBar from './components/TopNavBar';
 import Chats from './components/Chats';
 import InputBar from './components/InputBar';
 import { ChatRoomContainer, ProfileImgSmall } from './styles';
 
-// ChatData.json 파일에서 대화 데이터를 로드하는 함수
-const loadChatData = async () => {
-  const response = await fetch('/mockChatData.json');
-  return response.json();
-};
-
-const loadUserData = async () => {
-  const response = await fetch('/mockUserData.json');
-  return response.json();
-};
-
 const ChatRoom: React.FC = () => {
   const { id: chatId } = useParams<{ id: string }>();
+  const userData = useRecoilValue(userDataState); // atom에서 사용자 데이터 가져오기
+  const chatData = useRecoilValue(chatDataState); // atom에서 채팅 데이터 가져오기
+
   const [messages, setMessages] = useState<{ userId: number; content: string; time: string }[]>([]);
   const [currentUserId, setCurrentUserId] = useState<number>(0);
   const [opponentUserId, setOpponentUserId] = useState<number>(0);
   const [opponentProfileImage, setOpponentProfileImage] = useState<string | null>(null);
   const chatRef = React.useRef<HTMLDivElement>(null);
   const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(null);
-  const [, setUsers] = useState<{ id: number; name: string; profileImage: string }[]>([]); // 사용자 데이터 상태
 
   useEffect(() => {
-    const initializeChat = async () => {
-      const data = await loadChatData();
-      const chatData = data.chatMessages[chatId!]; // chatId에 해당하는 대화 데이터 가져오기
-      const userData = await loadUserData(); // 사용자 데이터 로드
-      
+    const initializeChat = () => {
+      const chatDataForId = chatData[chatId!]; // chatId에 해당하는 대화 데이터 가져오기
 
-      if (chatData) {
+      if (chatDataForId) {
         // 현재 사용자 ID와 상대방 사용자 ID 설정
-        setCurrentUserId(chatData.users[0].id); // 첫 번째 사용자를 현재 사용자로 설정
-        setOpponentUserId(chatData.users[1].id); // 두 번째 사용자를 상대방으로 설정
-        setUsers(userData); // 사용자 데이터 설정
-        setMessages(chatData.messages); // 대화 메시지 설정
+        setCurrentUserId(chatDataForId.users[0].id); // 첫 번째 사용자를 현재 사용자로 설정
+        setOpponentUserId(chatDataForId.users[1].id); // 두 번째 사용자를 상대방으로 설정
+        setMessages(chatDataForId.messages); // 대화 메시지 설정
         
         // userData에서 상대방 프로필 이미지 찾기
-        const opponentUser = userData.find((user: { id: number; name: string; profileImage: string }) => user.id === chatData.users[1].id);
+        const opponentUser = userData.find((user) => user.id === chatDataForId.users[1].id);
         setOpponentProfileImage(opponentUser ? opponentUser.profileImage : null);
       }
 
@@ -55,7 +44,7 @@ const ChatRoom: React.FC = () => {
     if (chatId) {
       initializeChat();
     }
-  }, [chatId]);
+  }, [chatId, chatData, userData]); // 의존성 배열에 chatData와 userData 추가
 
   useEffect(() => {
     // 새 메시지가 추가되면 스크롤을 맨 아래로 이동
@@ -78,23 +67,16 @@ const ChatRoom: React.FC = () => {
     }
 
     const timeoutId = setTimeout(() => {
-      const receivedMessage1 = { userId: opponentUserId, content: "세오스", time: new Date().toISOString() };
+      const receivedMessage1 = { userId: opponentUserId, content: "세오스 20기", time: new Date().toISOString() };
       const updatedMessagesWithFirstResponse = [...updatedMessages, receivedMessage1];
       setMessages(updatedMessagesWithFirstResponse);
       localStorage.setItem(`chatMessages-${chatId}`, JSON.stringify(updatedMessagesWithFirstResponse));
 
       setTimeout(() => {
-        const receivedMessage2 = { userId: opponentUserId, content: "20기", time: new Date().toISOString() };
+        const receivedMessage2 = { userId: opponentUserId, content: "FE 파이팅 🩷🩷", time: new Date().toISOString() };
         const updatedMessagesWithSecondResponse = [...updatedMessagesWithFirstResponse, receivedMessage2];
         setMessages(updatedMessagesWithSecondResponse);
         localStorage.setItem(`chatMessages-${chatId}`, JSON.stringify(updatedMessagesWithSecondResponse));
-
-        setTimeout(() => {
-          const receivedMessage3 = { userId: opponentUserId, content: "FE 파이팅 🩷🩷", time: new Date().toISOString() };
-          const updatedMessagesWithThirdResponse = [...updatedMessagesWithSecondResponse, receivedMessage3];
-          setMessages(updatedMessagesWithThirdResponse);
-          localStorage.setItem(`chatMessages-${chatId}`, JSON.stringify(updatedMessagesWithThirdResponse));
-        }, 2000);
       }, 2000);
     }, 2000);
 
@@ -128,6 +110,7 @@ const ChatRoom: React.FC = () => {
 };
 
 export default ChatRoom;
+
 
 
 
