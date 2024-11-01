@@ -148,14 +148,14 @@ return (
                 onDoubleClick={(event) => handleMessageDoubleClick(index, event)} // 더블 클릭 시 이모지 제거
               >
                 {updateMessageWithEmoji(index, msg.content)}
-                {emoji && <Emoji style={{ position: 'absolute', bottom: '1px', right: '10px' }}>{emoji}</Emoji>} {/* 메시지 위에 이모지 표시 */}
+                {emoji && <Emoji style={{ position: 'absolute', bottom: '1px', right: 0 }}>{emoji}</Emoji>} {/* 메시지 위에 이모지 표시 */}
               </MyMessage>
             ) : ( // 다른 사용자의 메시지일 경우
               <OtherMessageContainer
                 $hasProfileImg={isLastOtherMessage}
                 $isGroupEnd={isGroupEnd}
               >
-                {getProfileImage(isLastOtherMessage ? index : index - 1)} {/* 프로필 이미지 표시 */}
+                {getProfileImage(isLastOtherMessage ? index : index - 1)}
                 <OtherMessage
                   $isFirstMessage={isFirstMessage}
                   $isMiddleMessage={isMiddleMessage}

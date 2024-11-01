@@ -12,7 +12,7 @@ const formatTimestamp = (timestamp: string) => {
 };
 
 interface ChatListProps {
-  searchTerm: string; // 추가된 props
+  searchTerm: string;
 }
 
 const ChatList: React.FC<ChatListProps> = ({ searchTerm }) => {

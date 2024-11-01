@@ -25,8 +25,8 @@ export const LoadingContainer = styled.div`
 `;
 
 export const DotContainer = styled.div`
-display: flex;
-justify-content: center;
+  display: flex;
+  justify-content: center;
 `;
 
 export const Dot = styled.span`

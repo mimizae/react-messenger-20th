@@ -14,7 +14,7 @@ const GlobalStyle = createGlobalStyle`
         align-items: center;
         margin: 0;
         height: 100vh;
-        background-color: #f0f0f0; /* 배경색 설정 */
+        background-color: #f0f0f0;
         overflow: hidden;
     }
 
@@ -23,9 +23,9 @@ const GlobalStyle = createGlobalStyle`
         max-width: 375px;
         max-height: 812px;
         height: 100%;
-        border-radius: 20px;
+        border-radius: 40px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        background-color: #ffffff; /* 원하는 색상으로 변경 */
+        background-color: #ffffff;
     }
 
     @font-face {

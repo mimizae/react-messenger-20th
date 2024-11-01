@@ -6,11 +6,11 @@ export const ListContainer = styled.div`
 `;
 
 export const Count = styled.span`
-margin-top: 22px;
-color: #C9CDD2;
-font-size: 12px;
-font-style: normal;
-font-weight: 400;
+  margin-top: 22px;
+  color: #C9CDD2;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
 `;
 export const FriendItem = styled.div`
   display: flex;
@@ -25,15 +25,15 @@ export const ProfileImg = styled.img`
 `;
 
 export const FriendName = styled.span`
-color: #454C53;
-font-size: 16px;
-font-style: normal;
-font-weight: 600;
+  color: #454C53;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
 `;
 
 export const NoResult = styled.div`
-margin-top: 20px;
-text-align: center;
-font-size: 16px;
-font-style: normal;
+  margin-top: 20px;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
 `;

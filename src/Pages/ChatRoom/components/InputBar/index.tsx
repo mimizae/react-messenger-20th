@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import camera from '../../../../assets/ChatRoom/Camera.svg';
 import gallery from '../../../../assets/ChatRoom/Gallery.svg';
 import Good from '../../../../assets/ChatRoom/Good.svg';
-import sendIcon from '../../../../assets/ChatRoom/SendIcon.svg'; // 전송 버튼 아이콘
+import sendIcon from '../../../../assets/ChatRoom/SendIcon.svg';
 import { InputBarContainer, Camera, Gallery, InputField, GoodButton, SendButton} from './style';
 
 interface InputBarProps {

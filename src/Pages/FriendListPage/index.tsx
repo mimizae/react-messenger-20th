@@ -5,6 +5,7 @@ import { chatDataState, userDataState } from '../../recoil/atom';
 import { PageContainer } from './style';
 import BottomNav from '../../components/BottomNav';
 import Header from '../../components/Header';
+import StatusBar from '../../components/StatusBar';
 
 const FriendListPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -51,6 +52,7 @@ const FriendListPage: React.FC = () => {
 
   return (
     <PageContainer>
+      <StatusBar/>
       <Header searchTerm={searchTerm} onSearchChange={handleSearchChange} title='친구' />
       <FriendList searchTerm={searchTerm} />
       <BottomNav />

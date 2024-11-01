@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Chat = styled.div`
   display: flex;
   flex-direction: column;
-  height: 690px;
+  height: 645px;
   overflow-y: auto;
 
   &::-webkit-scrollbar {

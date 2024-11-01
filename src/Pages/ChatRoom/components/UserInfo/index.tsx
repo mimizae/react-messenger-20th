@@ -11,7 +11,7 @@ const UserInfo: React.FC<{ id: number }> = ({ id }) => {
 
   return (
     <UserInfoContainer>
-      <BigProfileImg src={userInfo?.profileImage} alt="Big Profile" /> {/* 프로필 이미지 표시 */}
+      <BigProfileImg src={userInfo?.profileImage} alt="Big Profile" />
       <h2>{userInfo?.name}</h2>
       <p>Facebook 친구입니다</p>
       <Address>서울거주</Address>

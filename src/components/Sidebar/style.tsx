@@ -17,49 +17,49 @@ export const Overlay = styled.div`
 `;
 
 export const SidebarContainer = styled.div<SidebarContainerProps>`
-display: flex;
-flex-direction: column;
-position: absolute; // 부모 요소에 상대적으로 위치
-top: 0; // 부모 요소의 위쪽에 맞추기
-left: 0; // 부모 요소의 왼쪽에 맞추기
-width: 250px; // 사이드바 너비
-height: 100%; // 부모 요소의 높이에 맞추기
-background-color: white; // 배경 색상
-z-index: 1000; // 다른 요소 위에 표시
-border-radius: 20px 0 0 20px;
-color: black;
-padding: 0 16px;
-transition: transform 0.5s ease;
-transform: ${({ $isOpen }) => ($isOpen ? 'translateX(0)' : 'translateX(-100%)')};
+  display: flex;
+  flex-direction: column;
+  position: absolute; // 부모 요소에 상대적으로 위치
+  top: 0; // 부모 요소의 위쪽에 맞추기
+  left: 0; // 부모 요소의 왼쪽에 맞추기
+  width: 250px; // 사이드바 너비
+  height: 100%; // 부모 요소의 높이에 맞추기
+  background-color: white; // 배경 색상
+  z-index: 1000; // 다른 요소 위에 표시
+  border-radius: 20px 0 0 20px;
+  color: black;
+  padding: 0 16px;
+  transition: transform 0.5s ease;
+  transform: ${({ $isOpen }) => ($isOpen ? 'translateX(0)' : 'translateX(-100%)')};
 `;
 
 export const MyProfile = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 12px;
-margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
 `;
 
 export const Title = styled.div`
-margin-top: 60px;
-font-size: 20px;
-font-style: normal;
-font-weight: 600;
+  margin-top: 60px;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
 `;
 
 export const Photo = styled.img`
-display: flex;
-width: 102px;
-height: 102px;
+  display: flex;
+  width: 102px;
+  height: 102px;
 `;
 
 export const Name = styled.div`
-display: flex;
-font-size: 16px;
-font-style: normal;
-font-weight: 600;
-margin-bottom: 40px;
+  display: flex;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  margin-bottom: 40px;
 `;
 
 export const List = styled.div`

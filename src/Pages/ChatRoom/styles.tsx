@@ -2,10 +2,11 @@ import styled from 'styled-components';
 
 export const ChatRoomContainer = styled.div`
   display: flex;
-  height: 100vh;
+  padding: 0 16px;
+  height: 100%;
   flex-direction: column;
-  padding: 16px;
   position: relative;
+  overflow: auto; // 내부 요소가 넘칠 경우 스크롤 가능
 `;
 export const ProfileImgSmall = styled.img`
   width: 24px;
@@ -14,3 +15,4 @@ export const ProfileImgSmall = styled.img`
   border-radius: 50%; // 동그란 이미지
   transition: transform 0.3s ease; // 부드러운 이동을 위한 transition
 `;
+  

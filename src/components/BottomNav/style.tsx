@@ -4,29 +4,34 @@ interface NavItemProps {
   $active: boolean;
 }
 
-export const NavContainer = styled.div`
+export const BottomNavContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const MenuLayout = styled.div`
   display: flex;
   width: 100%;
   gap: 76px;
   align-items: center;
   justify-content: center;
-  padding: 12px 0 33px 0 ;
+  padding: 12px 0 40px 0 ;
   position: absolute; /* 부모 요소를 기준으로 하단에 고정 */
   bottom: 0; /* 부모 요소의 가장 아래에 위치 */
   left: 0;
   background-color: #F7F8F9; /* 배경 색상 */
-  border-radius: 0 0 20px 20px; 
+  border-radius: 0 0 40px 40px; 
 `;
 
-
 export const NavItem = styled.div<NavItemProps>`
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 5px;
-cursor: pointer; /* 커서 모양 */
-text-decoration: none;
-color: ${(props) => (props.$active ? "#1675FF" : "#72787F")}; /* $active 상태에 따른 색상 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer; /* 커서 모양 */
+  text-decoration: none;
+  color: ${(props) => (props.$active ? "#1675FF" : "#72787F")}; /* $active 상태에 따른 색상 */
 `;
 
 export const Menu = styled.span`
@@ -41,7 +46,16 @@ export const Menu = styled.span`
 `;
 
 export const Icon = styled.img`
-display: flex;
-width: 24px;
-height: 24px;
+  display: flex;
+  width: 24px;
+  height: 24px;
+`;
+
+export const HomeIndicator = styled.div`
+  width: 139px;
+  height: 5px;
+  border-radius: 100px;
+  background: var(--gray-scale-800, #26282B);
+  position: absolute; /* 부모 요소를 기준으로 하단에 고정 */
+  bottom: 10px; /* 부모 요소의 가장 아래에 위치 */
 `;

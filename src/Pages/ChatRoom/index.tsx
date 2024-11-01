@@ -6,6 +6,7 @@ import TopNavBar from './components/TopNavBar';
 import Chats from './components/Chats';
 import InputBar from './components/InputBar';
 import { ChatRoomContainer, ProfileImgSmall } from './styles';
+import StatusBar from '../../components/StatusBar';
 
 const ChatRoom: React.FC = () => {
   const { id: chatId } = useParams<{ id: string }>();
@@ -85,6 +86,7 @@ const ChatRoom: React.FC = () => {
 
   return (
     <ChatRoomContainer>
+      <StatusBar/>
       <TopNavBar id={opponentUserId} />
       <Chats 
         currentUserId={currentUserId}

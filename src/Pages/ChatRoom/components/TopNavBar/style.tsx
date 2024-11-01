@@ -41,7 +41,7 @@ export const Name = styled.div`
     font-size: 14px;
     font-style: normal;
     font-weight: 600;
-    background-color: white; /* 불투명한 배경 */
+    background-color: white;
 `;
 
 export const ActiveStatus = styled.div`
