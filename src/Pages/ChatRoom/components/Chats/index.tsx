@@ -4,6 +4,7 @@ import { Chat, MyMessage, OtherMessage, OtherMessageContainer, MessageTime, Emoj
 
 interface ChatProps {
   currentUserId: number; // 현재 사용자 ID
+  opponentUserId: number; // 대화 상대방 ID
   messages: { userId: number; content: string; time: string; emoji?: string; }[]; // 메시지 배열
   getProfileImage: (index: number) => JSX.Element | null; // 프로필 이미지 가져오는 함수
 }
@@ -19,7 +20,7 @@ const getDayLabel = (date: Date) => {
 const emojiList = ['👍🏻', '🩷', '😍', '😄', '😯', '😢', '😡'];
 
 // Chats 컴포넌트 정의
-const Chats = forwardRef<HTMLDivElement, ChatProps>(({ currentUserId, messages, getProfileImage }, ref) => {
+const Chats = forwardRef<HTMLDivElement, ChatProps>(({ currentUserId, opponentUserId, messages, getProfileImage }, ref) => {
   const [selectedEmoji, setSelectedEmoji] = useState<{ [key: number]: string }>({}); // 선택된 이모지 상태
   const [visibleEmojiPicker, setVisibleEmojiPicker] = useState<{ [key: number]: boolean }>({}); // 이모지 피커의 가시성 상태
 
@@ -102,7 +103,7 @@ const handleMessageDoubleClick = (index: number, event: React.MouseEvent<HTMLDiv
 
 return (
   <Chat ref={ref}>
-    <UserInfo id={currentUserId} /> {/* 현재 사용자 정보 표시 */}
+    <UserInfo id={opponentUserId} /> {/* 현재 사용자 정보 표시 */}
     {messages.map((msg, index) => {
       const isMyMessage = msg.userId === currentUserId; // 메시지가 현재 사용자의 것인지 확인
 

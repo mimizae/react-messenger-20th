@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ListContainer, Count, FriendItem, FriendName, ProfileImg } from "./style";
+import { ListContainer, Count, FriendItem, FriendName, ProfileImg, NoResult} from "./style";
 import phone from '../../../../assets/FriendListPage/blue-phone.svg';
 import { PhoneIcon } from "../../../ChatRoom/components/TopNavBar/style";
 
@@ -61,7 +61,7 @@ const FriendList: React.FC<FriendListProps> = ({ searchTerm }) => {
           </FriendItem>
         ))
       ) : (
-        <div>검색 결과가 없습니다.</div>
+        <NoResult>검색 결과가 없습니다. 🥹</NoResult>
       )}
     </ListContainer>
   );

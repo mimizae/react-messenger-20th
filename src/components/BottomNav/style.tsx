@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 interface NavItemProps {
-  active: boolean;
+  $active: boolean;
 }
 
 export const NavContainer = styled.div`
@@ -26,16 +26,18 @@ align-items: center;
 gap: 5px;
 cursor: pointer; /* 커서 모양 */
 text-decoration: none;
+color: ${(props) => (props.$active ? "#1675FF" : "#72787F")}; /* $active 상태에 따른 색상 */
 `;
 
 export const Menu = styled.span`
-color: #72787F;
-font-size: 12px;
-font-style: normal;
-font-weight: 500;
-&:hover {
-  color: #1675FF; /* 마우스 오버 시 색상 변경 */
-}
+  color: ${(props) => props.color || "#72787F"};
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+
+  &:hover {
+    color: #1675FF; /* 마우스 오버 시 색상 변경 */
+  }
 `;
 
 export const Icon = styled.img`

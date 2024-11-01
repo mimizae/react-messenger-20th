@@ -30,3 +30,10 @@ font-size: 16px;
 font-style: normal;
 font-weight: 600;
 `;
+
+export const NoResult = styled.div`
+margin-top: 20px;
+text-align: center;
+font-size: 16px;
+font-style: normal;
+`;

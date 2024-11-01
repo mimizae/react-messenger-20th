@@ -10,15 +10,15 @@ const BottomNav: React.FC = () => {
   
   return (
     <NavContainer>
-      <NavItem as={Link} to="/" active={location.pathname === "/"}>
+      <NavItem as={Link} to="/" $active={location.pathname === "/"}>
         <FriendIcon color={location.pathname === "/" ? "#1675FF" : "#72787F"} /> {/* 경로에 따라 색상 변경 */}
-        <Menu>친구</Menu>
+        <Menu color={location.pathname === "/" ? "#1675FF" : "#72787F"}>친구</Menu>
       </NavItem>
-      <NavItem as={Link} to="/chat" active={location.pathname === "/chat"}>
+      <NavItem as={Link} to="/chat" $active={location.pathname === "/chat"}>
         <ChatIcon color={location.pathname === "/chat" ? "#1675FF" : "#72787F"} /> {/* 경로에 따라 색상 변경 */}
-        <Menu>채팅</Menu>
+        <Menu color={location.pathname === "/chat" ? "#1675FF" : "#72787F"}>채팅</Menu>
       </NavItem>
-      <NavItem as={Link} to="/story" active={location.pathname === "/story"}>
+      <NavItem as={Link} to="/story" $active={location.pathname === "/story"}>
         <ChatIcon color="#72787F" /> {/* 스토리 아이콘은 항상 회색으로 설정 */}
         <Menu>스토리</Menu>
       </NavItem>

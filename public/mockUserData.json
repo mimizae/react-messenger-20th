@@ -2,23 +2,23 @@
     {
       "id": 1,
       "name": "세오스",
-      "profileImage": "/Ceos.svg"
+      "profileImage": "/Profile/Ceos.svg"
     },
     {
       "id": 2,
       "name": "승헌스",
-      "profileImage": "/seunghunse.svg"
+      "profileImage": "/Profile/seunghunse.svg"
     },
     {
       "id": 3,
       "name": "스윙스",
-      "profileImage": "/sws.svg"
+      "profileImage": "/Profile/sws.svg"
       
     },
     {
       "id": 4,
       "name": "시몬스",
-      "profileImage": "/simonse.svg"
+      "profileImage": "/Profile/simonse.svg"
     }
   ]
   

@@ -15,4 +15,6 @@ export const Address = styled.p`
 
 export const BigProfileImg = styled.img`
     display: flex;
+    width: 102px;
+    height: 102px;
 `;

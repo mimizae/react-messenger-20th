@@ -3,111 +3,122 @@ import { useParams } from 'react-router-dom';
 import TopNavBar from './components/TopNavBar';
 import Chats from './components/Chats';
 import InputBar from './components/InputBar';
-import Profile1 from '../../assets/ChatRoom/profile.svg';
-import Profile2 from '../../assets/ChatRoom/cat.svg';
 import { ChatRoomContainer, ProfileImgSmall } from './styles';
 
-const loadMessagesFromMockData = async (chatId: string) => {
-  const response = await fetch('/mockData.json');
-  const data = await response.json();
-  return data.chatMessages[chatId]?.messages || []; // 메시지 배열을 반환
+// ChatData.json 파일에서 대화 데이터를 로드하는 함수
+const loadChatData = async () => {
+  const response = await fetch('/mockChatData.json');
+  return response.json();
 };
 
-const loadMessagesFromLocalStorage = (chatId: string) => {
-  const messages = localStorage.getItem(`chatMessages-${chatId}`);
-  if (messages) {
-    const parsedMessages = JSON.parse(messages);
-    if (Array.isArray(parsedMessages) && parsedMessages.every(msg => typeof msg === 'object')) {
-      return parsedMessages; // 객체 배열로 반환
-    }
-  }
-  return [];
+const loadUserData = async () => {
+  const response = await fetch('/mockUserData.json');
+  return response.json();
 };
 
 const ChatRoom: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
-  const currentUserId = Number(id); // id를 숫자로 변환
-  const opponentUserId = currentUserId === 1 ? 2 : 1; // 상대방 사용자 ID 설정
-  const [messages, setMessages] = useState<{ userId: number; content: string; time: string }[]>([]); // time을 string으로 수정
+  const { id: chatId } = useParams<{ id: string }>();
+  const [messages, setMessages] = useState<{ userId: number; content: string; time: string }[]>([]);
+  const [currentUserId, setCurrentUserId] = useState<number>(0);
+  const [opponentUserId, setOpponentUserId] = useState<number>(0);
+  const [opponentProfileImage, setOpponentProfileImage] = useState<string | null>(null);
   const chatRef = React.useRef<HTMLDivElement>(null);
   const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [, setUsers] = useState<{ id: number; name: string; profileImage: string }[]>([]); // 사용자 데이터 상태
 
   useEffect(() => {
-    const fetchMessages = async () => {
-      const storedMessages = loadMessagesFromLocalStorage(id!);
-      if (storedMessages.length === 0) {
-        const mockMessages = await loadMessagesFromMockData(id!);
-        setMessages(mockMessages);
-      } else {
-        setMessages(storedMessages);
+    const initializeChat = async () => {
+      const data = await loadChatData();
+      const chatData = data.chatMessages[chatId!]; // chatId에 해당하는 대화 데이터 가져오기
+      const userData = await loadUserData(); // 사용자 데이터 로드
+      
+
+      if (chatData) {
+        // 현재 사용자 ID와 상대방 사용자 ID 설정
+        setCurrentUserId(chatData.users[0].id); // 첫 번째 사용자를 현재 사용자로 설정
+        setOpponentUserId(chatData.users[1].id); // 두 번째 사용자를 상대방으로 설정
+        setUsers(userData); // 사용자 데이터 설정
+        setMessages(chatData.messages); // 대화 메시지 설정
+        
+        // userData에서 상대방 프로필 이미지 찾기
+        const opponentUser = userData.find((user: { id: number; name: string; profileImage: string }) => user.id === chatData.users[1].id);
+        setOpponentProfileImage(opponentUser ? opponentUser.profileImage : null);
+      }
+
+      // 로컬 스토리지에서 메시지 로드
+      const storedMessages = localStorage.getItem(`chatMessages-${chatId}`);
+      if (storedMessages) {
+        setMessages(JSON.parse(storedMessages));
       }
     };
 
-    fetchMessages();
-  }, [id]);
+    if (chatId) {
+      initializeChat();
+    }
+  }, [chatId]);
 
   useEffect(() => {
-    // scroll을 맨 아래로 이동
+    // 새 메시지가 추가되면 스크롤을 맨 아래로 이동
     if (chatRef.current) {
       chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
-  }, [messages]); // messages가 변경될 때마다 실행
+  }, [messages]);
 
   const handleSendMessage = (message: string) => {
-    const newMessage = { userId: currentUserId, content: message, time: new Date().toISOString() }; // 현재 시간을 ISO 문자열로 저장
-    const updatedMessages = [...messages, newMessage]; // 나의 메시지 추가
+    const newMessage = { userId: currentUserId, content: message, time: new Date().toISOString() };
+    const updatedMessages = [...messages, newMessage];
     setMessages(updatedMessages);
-    localStorage.setItem(`chatMessages-${id}`, JSON.stringify(updatedMessages));
-    localStorage.setItem(`chatMessages-${opponentUserId}`, JSON.stringify(updatedMessages));
 
+    // 로컬 스토리지에 저장
+    localStorage.setItem(`chatMessages-${chatId}`, JSON.stringify(updatedMessages));
+
+    // 상대방의 자동 답장 로직
     if (typingTimeout) {
       clearTimeout(typingTimeout);
     }
 
-    const timeoutId1 = setTimeout(() => {
-      const receivedMessage1 = { userId: opponentUserId, content: "청경채의 익힘 정도를", time: new Date().toISOString() }; // 상대방 메시지
+    const timeoutId = setTimeout(() => {
+      const receivedMessage1 = { userId: opponentUserId, content: "세오스", time: new Date().toISOString() };
       const updatedMessagesWithFirstResponse = [...updatedMessages, receivedMessage1];
       setMessages(updatedMessagesWithFirstResponse);
-      localStorage.setItem(`chatMessages-${id}`, JSON.stringify(updatedMessagesWithFirstResponse));
-      localStorage.setItem(`chatMessages-${opponentUserId}`, JSON.stringify(updatedMessagesWithFirstResponse));
+      localStorage.setItem(`chatMessages-${chatId}`, JSON.stringify(updatedMessagesWithFirstResponse));
 
-      // 두 번째 답장
       setTimeout(() => {
-        const receivedMessage2 = { userId: opponentUserId, content: "억.억이게뭐예유", time: new Date().toISOString() };
+        const receivedMessage2 = { userId: opponentUserId, content: "20기", time: new Date().toISOString() };
         const updatedMessagesWithSecondResponse = [...updatedMessagesWithFirstResponse, receivedMessage2];
         setMessages(updatedMessagesWithSecondResponse);
-        localStorage.setItem(`chatMessages-${id}`, JSON.stringify(updatedMessagesWithSecondResponse));
-        localStorage.setItem(`chatMessages-${opponentUserId}`, JSON.stringify(updatedMessagesWithSecondResponse));
+        localStorage.setItem(`chatMessages-${chatId}`, JSON.stringify(updatedMessagesWithSecondResponse));
 
-        // 세 번째 답장
         setTimeout(() => {
-          const receivedMessage3 = { userId: opponentUserId, content: "요리하는돌아이귀여워", time: new Date().toISOString() };
+          const receivedMessage3 = { userId: opponentUserId, content: "FE 파이팅 🩷🩷", time: new Date().toISOString() };
           const updatedMessagesWithThirdResponse = [...updatedMessagesWithSecondResponse, receivedMessage3];
           setMessages(updatedMessagesWithThirdResponse);
-          localStorage.setItem(`chatMessages-${id}`, JSON.stringify(updatedMessagesWithThirdResponse));
-          localStorage.setItem(`chatMessages-${opponentUserId}`, JSON.stringify(updatedMessagesWithThirdResponse));
-        }, 2000); // 세 번째 답장
+          localStorage.setItem(`chatMessages-${chatId}`, JSON.stringify(updatedMessagesWithThirdResponse));
+        }, 2000);
+      }, 2000);
+    }, 2000);
 
-      }, 2000); // 두 번째 답장
-
-    }, 2000); // 첫 번째 답장    
-
-    setTypingTimeout(timeoutId1);
+    setTypingTimeout(timeoutId);
   };
 
   return (
     <ChatRoomContainer>
-      <TopNavBar id={id} />
+      <TopNavBar id={opponentUserId} />
       <Chats 
         currentUserId={currentUserId}
+        opponentUserId={opponentUserId}
         ref={chatRef}
         messages={messages} 
         getProfileImage={(index: number) => {
-          const isLastMessage = messages[index].userId === opponentUserId && // 상대방의 메시지일 때
+          // 메시지 배열의 길이를 체크하여 유효한 인덱스인지 확인
+          if (index < 0 || index >= messages.length) {
+            return null; // 유효하지 않은 인덱스일 경우 null 반환
+          }
+          const isLastMessage = messages[index].userId === opponentUserId && 
             (index === messages.length - 1 || messages[index + 1]?.userId === currentUserId);
 
           return isLastMessage ? (
-            <ProfileImgSmall src={id === "1" ? Profile1 : Profile2} alt="상대방 프로필" />
+            <ProfileImgSmall src={opponentProfileImage || ''} alt="상대방 프로필" />
           ) : null;
         }} 
       />
@@ -117,6 +128,8 @@ const ChatRoom: React.FC = () => {
 };
 
 export default ChatRoom;
+
+
 
 
 
