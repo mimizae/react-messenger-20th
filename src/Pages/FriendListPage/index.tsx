@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import FriendList from './component/FriendList';
+import FriendList from './FriendList';
 import { useRecoilState } from 'recoil';
 import { chatDataState, userDataState } from '../../recoil/atom';
 import { PageContainer } from './style';
@@ -7,6 +7,7 @@ import BottomNav from '../../components/BottomNav';
 import Header from '../../components/Header';
 import StatusBar from '../../components/StatusBar';
 
+//사실상 Home 페이지!
 const FriendListPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [, setUserData] = useRecoilState(userDataState);

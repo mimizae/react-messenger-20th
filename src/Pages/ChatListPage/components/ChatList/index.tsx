@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { userDataState, chatDataState  } from '../../../../recoil/atom';
 import { ChatListLayout, ChatItem, LastMessage, Timestamp, ChatName, UserPhoto, ChatInfo, MesseageInfo } from './style';
-import { NoResult } from '../../../FriendListPage/component/FriendList/style';
+import { NoResult } from '../../../FriendListPage/FriendList/style';
+import { SearchListProps } from '../../../FriendListPage/FriendList';
 
 // 타임스탬프 포맷팅 함수
 const formatTimestamp = (timestamp: string) => {
@@ -11,11 +12,7 @@ const formatTimestamp = (timestamp: string) => {
   return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 };
 
-interface ChatListProps {
-  searchTerm: string;
-}
-
-const ChatList: React.FC<ChatListProps> = ({ searchTerm }) => {
+const ChatList: React.FC<SearchListProps> = ({ searchTerm }) => {
   const users = useRecoilValue(userDataState); // atom에서 사용자 데이터 가져오기
   const chatRooms = useRecoilValue(chatDataState); // atom에서 채팅 데이터 가져오기
   const navigate = useNavigate();

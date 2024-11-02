@@ -1,7 +1,7 @@
 import React from "react";
 import { PageContainer } from "../FriendListPage/style";
 import BottomNav from "../../components/BottomNav";
-import LoadingSpinner from "./components/Loading";
+import LoadingSpinner from "./LoadingSpinner";
 
 const StoryPage: React.FC = () => {
     return (

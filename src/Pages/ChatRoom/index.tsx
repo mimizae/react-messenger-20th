@@ -7,13 +7,13 @@ import Chats from './components/Chats';
 import InputBar from './components/InputBar';
 import { ChatRoomContainer, ProfileImgSmall } from './styles';
 import StatusBar from '../../components/StatusBar';
+import { MessageProps } from './components/Chats';
 
 const ChatRoom: React.FC = () => {
   const { id: chatId } = useParams<{ id: string }>();
   const userData = useRecoilValue(userDataState); // atom에서 사용자 데이터 가져오기
   const [chatData, setChatData] = useRecoilState(chatDataState); // atom에서 채팅 데이터 가져오기 및 업데이트하기
-
-  const [messages, setMessages] = useState<{ userId: number; content: string; time: string }[]>([]);
+  const [messages, setMessages] = useState< MessageProps[]>([]);
   const [currentUserId, setCurrentUserId] = useRecoilState(currentUserIdState);
   const [opponentUserId, setOpponentUserId] = useRecoilState(opponentUserIdState);
   const [opponentProfileImage, setOpponentProfileImage] = useState<string | null>(null);
@@ -28,13 +28,13 @@ const ChatRoom: React.FC = () => {
         // 현재 사용자 ID와 상대방 사용자 ID 설정
         setCurrentUserId(chatDataForId.users[0].id); // 첫 번째 사용자를 현재 사용자로 설정
         setOpponentUserId(chatDataForId.users[1].id); // 두 번째 사용자를 상대방으로 설정
-        setMessages(chatDataForId.messages); // 대화 메시지 설정
+        setMessages(chatDataForId.messages as MessageProps[]); // 대화 메시지 설정
       }
 
       // 로컬 스토리지에서 메시지 로드
       const storedMessages = localStorage.getItem(`chatMessages-${chatId}`);
       if (storedMessages) {
-        setMessages(JSON.parse(storedMessages));
+        setMessages(JSON.parse(storedMessages) as MessageProps[]);
       }
     };
 
@@ -56,8 +56,8 @@ const ChatRoom: React.FC = () => {
   }, [messages]);
 
   const handleSendMessage = (message: string) => {
-    const newMessage = { userId: currentUserId, content: message, time: new Date().toISOString() };
-    const updatedMessages = [...messages, newMessage];
+    const newMessage:MessageProps = { userId: currentUserId, content: message, time: new Date().toISOString() };
+    const updatedMessages:MessageProps[] = [...messages, newMessage];
     setMessages(updatedMessages);
 
     // 로컬 스토리지에 저장
@@ -78,8 +78,8 @@ const ChatRoom: React.FC = () => {
     }
 
     const timeoutId = setTimeout(() => {
-      const receivedMessage1 = { userId: opponentUserId, content: "세오스 20기", time: new Date().toISOString() };
-      const updatedMessagesWithFirstResponse = [...updatedMessages, receivedMessage1];
+      const receivedMessage1: MessageProps = { userId: opponentUserId, content: "세오스 20기", time: new Date().toISOString() };
+      const updatedMessagesWithFirstResponse: MessageProps[] = [...updatedMessages, receivedMessage1];
       setMessages(updatedMessagesWithFirstResponse);
 
       // 로컬 스토리지와 Recoil 상태에 저장
@@ -93,8 +93,8 @@ const ChatRoom: React.FC = () => {
       }));
 
       setTimeout(() => {
-        const receivedMessage2 = { userId: opponentUserId, content: "FE 파이팅 🩷🩷", time: new Date().toISOString() };
-        const updatedMessagesWithSecondResponse = [...updatedMessagesWithFirstResponse, receivedMessage2];
+        const receivedMessage2:MessageProps = { userId: opponentUserId, content: "FE 파이팅 🩷🩷", time: new Date().toISOString() };
+        const updatedMessagesWithSecondResponse: MessageProps[] = [...updatedMessagesWithFirstResponse, receivedMessage2];
         setMessages(updatedMessagesWithSecondResponse);
 
         // 로컬 스토리지와 Recoil 상태에 최종 메시지 저장

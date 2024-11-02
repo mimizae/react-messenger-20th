@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import FriendIcon from '../../assets/FriendListPage/FriendIcon';
 import ChatIcon from '../../assets/FriendListPage/ChatIcon'; 
 import StroyIcon from '../../assets/FriendListPage/StoryIcon';
+
 const BottomNav: React.FC = () => {
   const location = useLocation();
   

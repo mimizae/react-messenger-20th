@@ -1,22 +1,22 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { ListContainer, Count, FriendItem, FriendName, ProfileImg, NoResult } from "./style";
-import phone from '../../../../assets/FriendListPage/blue-phone.svg';
-import { PhoneIcon } from "../../../ChatRoom/components/TopNavBar/style";
+import phone from '../../../assets/FriendListPage/blue-phone.svg';
+import { PhoneIcon } from "../../ChatRoom/components/TopNavBar/style";
 import { useRecoilValue } from 'recoil';
-import { userDataState } from "../../../../recoil/atom";
+import { userDataState } from "../../../recoil/atom";
 
-interface User {
+export interface User {
   id: number;
   name: string;
   profileImage: string;
 }
 
-interface FriendListProps {
+export interface SearchListProps {
   searchTerm: string;
 }
 
-const FriendList: React.FC<FriendListProps> = ({ searchTerm }) => {
+const FriendList: React.FC<SearchListProps> = ({ searchTerm }) => {
   const userData = useRecoilValue(userDataState); // atom에서 사용자 데이터 가져오기
   const navigate = useNavigate();
 

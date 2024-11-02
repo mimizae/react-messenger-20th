@@ -2,10 +2,17 @@ import { forwardRef, useEffect, useState } from 'react';
 import UserInfo from '../UserInfo';
 import { Chat, MyMessage, OtherMessage, OtherMessageContainer, MessageTime, EmojiPicker, Emoji, MymessageEmoji, OtherMessageEmoji } from './style';
 
+export interface MessageProps{
+  userId: number; 
+  content: string; 
+  time: string; 
+  emoji?: string;
+}
+
 interface ChatProps {
   currentUserId: number; // 현재 사용자 ID
   opponentUserId: number; // 대화 상대방 ID
-  messages: { userId: number; content: string; time: string; emoji?: string; }[]; // 메시지 배열
+  messages: MessageProps[]; // 메시지 배열
   getProfileImage: (index: number) => JSX.Element | null; // 프로필 이미지 가져오는 함수
 }
 
