@@ -11,7 +11,7 @@ import StatusBar from '../../components/StatusBar';
 const ChatRoom: React.FC = () => {
   const { id: chatId } = useParams<{ id: string }>();
   const userData = useRecoilValue(userDataState); // atom에서 사용자 데이터 가져오기
-  const chatData = useRecoilValue(chatDataState); // atom에서 채팅 데이터 가져오기
+  const [chatData, setChatData] = useRecoilState(chatDataState); // atom에서 채팅 데이터 가져오기 및 업데이트하기
 
   const [messages, setMessages] = useState<{ userId: number; content: string; time: string }[]>([]);
   const [currentUserId, setCurrentUserId] = useRecoilState(currentUserIdState);
@@ -60,9 +60,17 @@ const ChatRoom: React.FC = () => {
     const updatedMessages = [...messages, newMessage];
     setMessages(updatedMessages);
 
-
     // 로컬 스토리지에 저장
     localStorage.setItem(`chatMessages-${chatId}`, JSON.stringify(updatedMessages));
+
+    // Recoil 상태 업데이트
+    setChatData((prevChatData) => ({
+      ...prevChatData,
+      [chatId!]: {
+        ...prevChatData[chatId!],
+        messages: updatedMessages,
+      },
+    }));
 
     // 상대방의 자동 답장 로직
     if (typingTimeout) {
@@ -73,13 +81,31 @@ const ChatRoom: React.FC = () => {
       const receivedMessage1 = { userId: opponentUserId, content: "세오스 20기", time: new Date().toISOString() };
       const updatedMessagesWithFirstResponse = [...updatedMessages, receivedMessage1];
       setMessages(updatedMessagesWithFirstResponse);
+
+      // 로컬 스토리지와 Recoil 상태에 저장
       localStorage.setItem(`chatMessages-${chatId}`, JSON.stringify(updatedMessagesWithFirstResponse));
+      setChatData((prevChatData) => ({
+        ...prevChatData,
+        [chatId!]: {
+          ...prevChatData[chatId!],
+          messages: updatedMessagesWithFirstResponse,
+        },
+      }));
 
       setTimeout(() => {
         const receivedMessage2 = { userId: opponentUserId, content: "FE 파이팅 🩷🩷", time: new Date().toISOString() };
         const updatedMessagesWithSecondResponse = [...updatedMessagesWithFirstResponse, receivedMessage2];
         setMessages(updatedMessagesWithSecondResponse);
+
+        // 로컬 스토리지와 Recoil 상태에 최종 메시지 저장
         localStorage.setItem(`chatMessages-${chatId}`, JSON.stringify(updatedMessagesWithSecondResponse));
+        setChatData((prevChatData) => ({
+          ...prevChatData,
+          [chatId!]: {
+            ...prevChatData[chatId!],
+            messages: updatedMessagesWithSecondResponse,
+          },
+        }));
       }, 2000);
     }, 2000);
 
@@ -114,6 +140,7 @@ const ChatRoom: React.FC = () => {
 };
 
 export default ChatRoom;
+
 
 
 
